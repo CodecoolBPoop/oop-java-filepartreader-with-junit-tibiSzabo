@@ -8,6 +8,7 @@ public class FilePartReader {
     private String filePath;
     private int fromLine;
     private int toLine;
+    public final String FILEPATH = System.getProperty("user.dir") + "\\testfile.txt";
 
     FilePartReader(){
         this.filePath = "invalid default value";
@@ -26,14 +27,13 @@ public class FilePartReader {
 
     }
 
-    public List<String> read(String filePath) {
+    public List<String> read() {
         List<String> result = new ArrayList<>();
         String line;
         try
         {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             while ((line = reader.readLine()) != null) {
-                line += " ";
                 result.add(line);
             }
         } catch (IOException ex) {
@@ -42,15 +42,16 @@ public class FilePartReader {
         return result;
     }
 
-    public String readLines(){
-        List<String> fileContent = read(filePath);
-        StringBuilder result = new StringBuilder("");
+    public List<String> readLines(){
+        List<String> fileContent = read();
+        List<String> result = new ArrayList<>();
+
         int idx = fromLine;
         while (toLine - idx != -1) {
-            result.append(fileContent.get(idx - 1));
+            result.add(fileContent.get(idx - 1));
             idx++;
         }
-        return result.toString();
+        return result;
     }
 
 }
